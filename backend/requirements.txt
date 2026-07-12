@@ -1,0 +1,8 @@
+flask
+flask-cors
+scikit-learn
+gensim
+Sastrawi
+imbalanced-learn
+numpy
+gunicorn
