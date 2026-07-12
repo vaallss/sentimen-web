@@ -86,9 +86,16 @@ def predict_all(text):
 
 @app.route('/api/predict', methods=['POST'])
 def predict_route():
-    text = request.json.get('text','').strip()
-    if not text: return jsonify({'error':'Teks kosong'}), 400
-    return jsonify(predict_all(text))
+    try:
+        text = request.json.get('text','').strip()
+        if not text: return jsonify({'error':'Teks kosong'}), 400
+        return jsonify(predict_all(text))
+    except Exception as e:
+        import traceback
+        return jsonify({
+            'error': str(e),
+            'traceback': traceback.format_exc()
+        }), 500
 
 @app.route('/api/batch', methods=['POST'])
 def batch_route():
