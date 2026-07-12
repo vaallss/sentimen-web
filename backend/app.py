@@ -6,17 +6,22 @@ warnings.filterwarnings('ignore')
 app = Flask(__name__)
 CORS(app)
 
-with open('models/tfidf.pkl','rb') as f:            TFIDF        = pickle.load(f)
-with open('models/model_nb.pkl','rb') as f:         NB_TF        = pickle.load(f)
-with open('models/model_svm.pkl','rb') as f:        SVM_TF       = pickle.load(f)
-with open('models/model_nb_w2v.pkl','rb') as f:     NB_W2V       = pickle.load(f)
-with open('models/model_svm_w2v.pkl','rb') as f:    SVM_W2V      = pickle.load(f)
-with open('models/model_nb_w2v_smote.pkl','rb') as f:  NB_W2V_S  = pickle.load(f)
-with open('models/model_svm_w2v_smote.pkl','rb') as f: SVM_W2V_S = pickle.load(f)
-with open('models/scaler_w2v.pkl','rb') as f:       SCALER       = pickle.load(f)
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+def get_model_path(rel_path):
+    return os.path.join(BASE_DIR, rel_path)
+
+with open(get_model_path('models/tfidf.pkl'),'rb') as f:            TFIDF        = pickle.load(f)
+with open(get_model_path('models/model_nb.pkl'),'rb') as f:         NB_TF        = pickle.load(f)
+with open(get_model_path('models/model_svm.pkl'),'rb') as f:        SVM_TF       = pickle.load(f)
+with open(get_model_path('models/model_nb_w2v.pkl'),'rb') as f:     NB_W2V       = pickle.load(f)
+with open(get_model_path('models/model_svm_w2v.pkl'),'rb') as f:    SVM_W2V      = pickle.load(f)
+with open(get_model_path('models/model_nb_w2v_smote.pkl'),'rb') as f:  NB_W2V_S  = pickle.load(f)
+with open(get_model_path('models/model_svm_w2v_smote.pkl'),'rb') as f: SVM_W2V_S = pickle.load(f)
+with open(get_model_path('models/scaler_w2v.pkl'),'rb') as f:       SCALER       = pickle.load(f)
 
 from gensim.models import Word2Vec
-W2V = Word2Vec.load('models/w2v_model.bin')
+W2V = Word2Vec.load(get_model_path('models/w2v_model.bin'))
 W2V_SIZE = W2V.vector_size
 
 try:
